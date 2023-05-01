@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 function App() {
   const [word, setWord] = useState('');
   const [definition, setDefinition] = useState('');
-
+  const [example, setExample] = useState('')
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
@@ -11,6 +12,12 @@ function App() {
       .then(data => {
         const definition = data[0].meanings[0].definitions[0].definition;
         setDefinition(definition);
+        if (data[0].meanings[0].definitions[0].example) {
+          const example = data[0].meanings[0].definitions[0].example;
+          setExample(example);
+        } else {
+          setExample('');
+        }
       })
       .catch(error => console.error(error));
   }
