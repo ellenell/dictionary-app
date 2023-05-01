@@ -8,6 +8,7 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+
       .then(response => response.json())
       .then(data => {
         const definition = data[0].meanings[0].definitions[0].definition;
@@ -20,11 +21,15 @@ function App() {
         }
       })
       .catch(error => console.error(error));
+
+      console.log(example)
   }
+
+
 
   return (
     <div>
-      <h1>Dictionary</h1>
+      <h1>Dictionary App</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Word:
@@ -32,7 +37,12 @@ function App() {
         </label>
         <button type="submit">Submit</button>
       </form>
-      {definition && <p>{definition}</p>}
+      {definition && (
+        <div>
+          <p><strong>Definition:</strong> {definition}</p>
+          {example && <p><strong>Example:</strong> {example}</p>}
+        </div>
+      )}
     </div>
   );
 }
